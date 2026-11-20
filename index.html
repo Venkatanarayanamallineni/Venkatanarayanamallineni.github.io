@@ -866,7 +866,7 @@ a:focus-visible,button:focus-visible{outline-color:var(--biz)}
     window.setuOpen=(key,rect)=>{const line=secret(key);if(!line)return;
       if(mode!=='drag'){if(innerWidth>900&&rect){tx=Math.min(W()-80,rect.right+14);ty=Math.max(200,rect.top+220);}else{tx=W()-80;ty=H()-86;}}
       speak(line,'Setu, off the record');mode='perch';perchUntil=performance.now()+14000;};
-    const quips=['Tell me once. I never forget. Unlike Kevin.','He tested an AI 184 times so you don\'t have to. I just sit here. Being a rock.','His superpower: asking "but is that true?" at the worst possible moment.','I\'m the mascot. He\'s the one making decisions. Drag me onto something.','He threw out a +153% result for being wrong. Who does that? Good analysts, apparently.','I float. He ships. We all have our gifts.','Business + AI Analyst. Translation: he asks why before he asks how.','Graduating December. Hire him before I start charging rent.'];
+    const quips=['Tell me once. I never forget. Unlike Kevin.','He tested an AI 184 times so you don\'t have to. I just sit here. Being a rock.','His superpower: asking "but is that true?" at the worst possible moment.','He\'s very into AI. He just checks its homework.','I float. He ships. We all have our gifts.','He threw out a +153% result for being wrong. Who does that? Good analysts, apparently.','Aeronautical engineer turned business analyst. He likes things that fly and things that make sense.','He built a satellite for playlists. I asked for a hat. Still waiting.','Business + AI Analyst. Translation: he asks why before he asks how.','Drag me onto a folder. I know things that aren\'t on the page.','Graduating December. Hire him before I start charging rent.','That\'s all my gossip. Starting over. I\'m a rock, not a podcast.'];
     const sectionLines={work:'Folders. Open one. They don\'t bite. I do, a little.',path:'Planes first, then business. He likes things that fly and things that make sense.',judgment:'This is the "he was right to be annoying" section.',how:'AI writes the code. He does the thinking. I do the commentary.'};
     const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
     let x=innerWidth-90,y=innerHeight-110,tx=x,ty=y,vy=0,mode='wander',perchUntil=0,nextMove=0,hideAt=0,lastScroll=scrollY,qi=0,said={};
@@ -892,10 +892,9 @@ a:focus-visible,button:focus-visible{outline-color:var(--biz)}
     setu.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();quip();}});
     setu.addEventListener('click',e=>{if(e.detail===0)quip();});
     window.setuSay=(key,el)=>{const v=T[key]||T.none;if(el&&mode!=='drag'){const r=el.getBoundingClientRect();tx=Math.min(W()-80,r.right+8);ty=Math.max(70,Math.min(H()-80,r.top));if(tx>W()-90)tx=Math.max(8,r.left-78);}speak(v[0],v[1]);mode='perch';perchUntil=performance.now()+10000;};
-    function quip(){speak(quips[qi%quips.length],'Setu');qi++;mode='perch';perchUntil=performance.now()+6000;}
+    function dock(){tx=small()?W()-78:W()-96;ty=small()?H()-150:H()*.42;}
+    function quip(){dock();speak(quips[qi%quips.length],'Setu');qi++;mode='perch';perchUntil=performance.now()+16000;}
     // react to sections as they arrive, once each
-    const io=new IntersectionObserver(es=>{for(const en of es){const id=en.target.id;if(en.isIntersecting&&sectionLines[id]&&!said[id]&&mode==='wander'&&!bub.classList.contains('on')){said[id]=1;setTimeout(()=>{if(mode==='wander')speak(sectionLines[id],'Setu');},600);}}},{threshold:.35});
-    Object.keys(sectionLines).forEach(id=>{const el=document.getElementById(id);el&&io.observe(el);});
     addEventListener('scroll',()=>{const d=scrollY-lastScroll;lastScroll=scrollY;if(mode==='wander'&&!still)vy-=d*.35;},{passive:true});
     addEventListener('resize',()=>{x=Math.min(x,W()-70);y=Math.min(y,H()-72);pick();});
     let t0=performance.now();
